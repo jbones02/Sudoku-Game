@@ -5,8 +5,14 @@ class Board:
     def print(self):
         for i in range(9):
             for j in range(9):
-                if i == 8:
-                    print(self.board[i][j], end='')  # If last num in row, do not print space after
+                if i == 8:  # If last num in row, do not print space after
+                    if self.board[i][j] == None:  # If val is empty
+                        print(' ', end='')
+                    else:  # If val is num
+                        print(self.board[i][j], end='')
                 else:
-                    print(self.board[i][j], end=' ')  # If last num in row, print space after
+                    if self.board[i][j] == None:  # If val is empty
+                        print(' ', end=' ')
+                    else:  # If val is num
+                        print(self.board[i][j], end=' ')
             print()  # Print new lin if end of row
