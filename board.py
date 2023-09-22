@@ -1,6 +1,6 @@
 class Board:
     def __init__ (self, board):
-        self.board = board
+        self.__board = board
 
     def print(self):
         for i in range(9):
@@ -21,3 +21,4 @@ class Board:
                         print(self.board[i][j], end=' ')
             print()  # Print new line if end of row
         print('-------------------------')  # Print bottom boarder
+    
