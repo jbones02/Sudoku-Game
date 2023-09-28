@@ -10,15 +10,15 @@ class Board:
                 if j == 0 or j == 3 or j == 6:
                     print ('| ', end='')
                 if j == 8:  # If last num in row, do not print space after
-                    if self.board[i][j] == None:  # If val is empty
-                        print(' ', end=' |')
+                    if self.__board[i][j] == None:  # If val is empty
+                        print('*', end=' |')
                     else:  # If val is num
-                        print(self.board[i][j], end=' |')
+                        print(self.__board[i][j], end=' |')
                 else:
-                    if self.board[i][j] == None:  # If val is empty
-                        print(' ', end=' ')
+                    if self.__board[i][j] == None:  # If val is empty
+                        print('*', end=' ')
                     else:  # If val is num
-                        print(self.board[i][j], end=' ')
+                        print(self.__board[i][j], end=' ')
             print()  # Print new line if end of row
         print('-------------------------')  # Print bottom boarder
     
