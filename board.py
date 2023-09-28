@@ -22,3 +22,9 @@ class Board:
             print()  # Print new line if end of row
         print('-------------------------')  # Print bottom boarder
     
+    def __row_is_valid(self, i, j):
+        
+
+    def __is_valid(self, i, j):
+        if __row_is_valid() and __col_is_valid() and __box_is_valid():
+            return True
