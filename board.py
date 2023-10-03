@@ -1,6 +1,8 @@
 class Board:
     def __init__ (self, board):
         self.__board = board
+        self.__empty_indices =  []
+        self.__get_empty_indices()
 
     def print(self):
         for i in range(9):
@@ -88,11 +90,66 @@ class Board:
 
     # Checks if cur num is valid
     def __is_valid(self, row_of_num, col_of_num):
-        num = self.__board[row_of_num][col_of_num] 
-        if self.__valid_in_row(num, row_of_num) and self.__valid_in_col(num, col_of_num) and self.__valid_in_box(num, row_of_num, col_of_num):
+        num = self.__board[row_of_num][col_of_num]
+        if num == None:  # Num is not valid if space is empty
+            return False
+        elif self.__valid_in_row(num, row_of_num) and self.__valid_in_col(num, col_of_num) and self.__valid_in_box(num, row_of_num, col_of_num):
             return True
         else:
             return False
         
+    # Finds indices of all empty spaces
+    def __get_empty_indices(self):
+        # Iterate of all spaces on board
+        for i in range(9):
+            for j in range(9):
+                if self.__board[i][j] == None:  # If empty space is found, save indices
+                    self.__empty_indices.append((i, j))
+
     def solve(self):
-        for ()
+        empty_space_itr = 0
+        while True:  # If all empty spaces have been iterated over, break from loop
+            if empty_space_itr + 1 > len(self.__empty_indices):
+                break
+
+            # Get position of empty space
+            #print("empty_space_itr: " + str(empty_space_itr)) #TESTCODE
+            cur_row = self.__empty_indices[empty_space_itr][0]
+            cur_col = self.__empty_indices[empty_space_itr][1]
+
+            while True:
+                self.print()
+                if self.__board[cur_row][cur_col] == None:
+                    self.__board[cur_row][cur_col] = 1
+                elif self.__is_valid(cur_row, cur_col):  # If num in cur space is valid, go to next space
+                    empty_space_itr += 1
+                    break
+                elif 1 <= self.__board[cur_row][cur_col] <= 8:  # Increment num in cur space if possible
+                    self.__board[cur_row][cur_col] += 1
+                else:  # Backtrack if all nums in cur space have been tried
+                    self.__board[cur_row][cur_col] = None
+                    empty_space_itr -= 1
+                    break
+            
+
+'''
+            # Find valid number to go in empty space
+            while True:
+                self.print()
+                if self.__board2.print()
+board[cur_row][cur_col] == None:  # If cur space is empty, start by trying 1
+                    self.__board[cur_row][cur_col] = 1
+                    if self.__is_valid(cur_row, cur_col):  # If num being tested is valid, move to next empty space
+                        empty_space_itr += 1
+                        break
+                elif 1 <= self.__board[cur_row][cur_col] <= 8:  # Increment num in cur space if num is less than 9
+                    self.__board[cur_row][cur_col] += 1
+                    if self.__is_valid(cur_row, cur_col):  # If num being tested is valid, move to next empty space
+                        empty_space_itr += 1
+                        break
+                else:  # Back track if all possible numbers have been tried backtrack 1 space
+                    self.__board[cur_row][cur_col] = None
+                    print("poo")
+                    empty_space_itr -= 1
+                    break
+'''
