@@ -106,7 +106,38 @@ class Board:
                 if self.__board[i][j] == None:  # If empty space is found, save indices
                     self.__empty_indices.append((i, j))
 
+    # Returns true if board is solved
+    def __is_solved(self):
+        for i in range(9):
+            for j in range(9):
+                if self.__board[i][j] == None:  # If empty space is found return false
+                    return False
+        return True
+
+    # Gets indices of next empty space
+    def __get_next_empty_indices(self):
+        for i in range(9):
+            for j in range(9):
+                if self.__board[i][j] == None:
+                    return [i, j]
+
     def solve(self):
+        # Base case for recursion
+        if self.__is_solved():
+            return True
+        
+        next_empty_indices = self.__get_next_empty_indices()
+        cur_row = next_empty_indices[0]
+        cur_col = next_empty_indices[1]
+
+        if self.__board[cur_row][cur_col] == None:
+            if self.__is_valid(1, cur_row, cur_col):
+            
+
+        
+
+
+        '''
         empty_space_itr = 0
         while True:  # If all empty spaces have been iterated over, break from loop
             if empty_space_itr + 1 > len(self.__empty_indices):
@@ -118,7 +149,7 @@ class Board:
             cur_col = self.__empty_indices[empty_space_itr][1]
 
             while True:
-                self.print()
+                # self.print()
                 if self.__board[cur_row][cur_col] == None:
                     self.__board[cur_row][cur_col] = 1
                 elif self.__is_valid(cur_row, cur_col):  # If num in cur space is valid, go to next space
@@ -130,7 +161,7 @@ class Board:
                     self.__board[cur_row][cur_col] = None
                     empty_space_itr -= 1
                     break
-            
+        '''    
 
 '''
             # Find valid number to go in empty space

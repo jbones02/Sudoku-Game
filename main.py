@@ -17,6 +17,6 @@ board2 = board.Board([[None, 7, 5, None, 9, None, None, None, 6],
                       [9, None, None, 4, None, None, None, None, 7],
                       [None, 6, None, None, 7, None, 5, 8, None],
                       [7, None, None, None, 1, None, 3, 9, None]])
-board2.print()
-board2.solve()
-board2.print()
+board1.print()
+board1.solve()
+board1.print()
