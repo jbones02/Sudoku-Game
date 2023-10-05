@@ -1,4 +1,4 @@
-class Board:
+class Game:
     def __init__ (self, board):
         self.__board = board
         self.__empty_indices =  []
