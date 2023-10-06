@@ -1,5 +1,6 @@
 import pygame
 import puzzle
+import text
 
 # Colors
 WHITE = (255, 255, 255)
@@ -26,32 +27,19 @@ class Game:
              if event.type == pygame.QUIT:
                   self.__in_menu = False
 
-    # Checks for events in play screen
-    def __check_events_play(self):
-        for event in pygame.event.get():
-             # User closes window
-             if event.type == pygame.QUIT:
-                  self.__playing = False
-
-    # Draw title text on menu screen
-    def __draw_title_text_menu(self):
-        font = pygame.font.Font('assets/font.ttf', 60)
-        title_text = font.render('Sudoku', True, BLACK)
-        title_text_rect = title_text.get_rect()
-        title_text_rect.center = (self.__WIDTH // 2, self.__HEIGHT // 2 - 100)
-        self.__WIN.blit(title_text, title_text_rect)
-
-    
-
     # Draws menu screen
     def __draw_win_menu(self):
-        self.__WIN.fill(LIGHT_GREEN)
-        self.__draw_title_text_menu()
-        pygame.display.update()
+        self.__WIN.fill(LIGHT_GREEN)  # Make background to light green
 
-    # Draws play screen
-    def __draw_win_play(self):
-         pass
+        # Create text objects
+        title_text = text.Text('Sudoku', 'assets/font.ttf', 60, self.__WIDTH // 2, self.__HEIGHT // 2 - 100, self.__WIN)
+        author_text = text.Text('By Jaryd Bones', 'assets/font.ttf', 15, self.__WIDTH // 2, self.__HEIGHT // 2 - 50, self.__WIN)
+        
+        # Draw text objects
+        title_text.draw()
+        author_text.draw()
+
+        pygame.display.update()  # Update window
 
     # Main menu game loop
     def __main_menu(self):
@@ -59,6 +47,17 @@ class Game:
               self.__clock.tick(self.__FRAME_RATE)
               self.__check_events_menu()
               self.__draw_win_menu()  # Update display
+
+    # Checks for events in play screen
+    def __check_events_play(self):
+        for event in pygame.event.get():
+             # User closes window
+             if event.type == pygame.QUIT:
+                  self.__playing = False
+
+    # Draws play screen
+    def __draw_win_play(self):
+         pass
 
     # Play game loop
     def __play_game(self):
