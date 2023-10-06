@@ -13,6 +13,8 @@ class Game:
         pygame.init()
         self.__WIDTH = 600
         self.__HEIGHT = 600
+        self.__PUZZLE_HEIGHT = 450
+        self.__PUZZLE_WIDTH = 450
         self.__FRAME_RATE = 60
         self.__in_menu = False
         self.__playing = False
@@ -26,6 +28,10 @@ class Game:
         self.__AUTHOR_TEXT = text.Text('By Jaryd Bones', 'assets/font.ttf', 15, self.__WIDTH // 2, self.__HEIGHT // 2 - 60, self.__WIN)
         self.__START_BTN = button.Button('Start', 'assets/font.ttf', 30, rgb.WHITE, self.__WIDTH // 2, self.__HEIGHT // 2 + 20, self.__WIN)
         self.__QUIT_BTN = button.Button('Quit', 'assets/font.ttf', 30, rgb.WHITE, self.__WIDTH // 2, self.__HEIGHT // 2 + 80, self.__WIN)
+
+        # Create objects for play
+        self.__attempts_remaining = 3
+        self.__ATTEMPTS_REMAINING = text.Text('ATTEMPTS REMAINING: 3', 'assets/font.ttf', 30, True, rgb.WHITE, self.__WIDTH // 2 + 300, self.__HEIGHT // 2 - 100, self.__WIN)
 
     # Checks for events in menu screen
     def __check_events_menu(self):
@@ -75,6 +81,13 @@ class Game:
     def __draw_win_play(self):
         self.__WIN.fill(rgb.GREEN)  # Make background light green
 
+        # Attempts remaining text
+        self.__ATTEMPTS_REMAINING.draw()
+
+        # Puzzle Boarder
+        puzzle_boarder = pygame.Rect(0, 0, self.__PUZZLE_WIDTH, self.__PUZZLE_HEIGHT)
+        puzzle_boarder.center = (self.__WIDTH // 2, self.__WIDTH // 2)
+        pygame.draw.rect(self.__WIN, rgb.BLACK, puzzle_boarder)
         pygame.display.update()  # Update window
 
     # Play game loop
