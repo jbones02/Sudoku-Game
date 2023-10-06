@@ -2,7 +2,7 @@ import game
 import puzzle
 
 sudoku_game = game.Game()
-sudoku_game.start()
+sudoku_game.run()
 
 '''
 board1 = board.Board([[None, 7, None, None, 1, 4, None, None, None],
