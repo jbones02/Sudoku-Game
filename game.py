@@ -31,7 +31,7 @@ class Game:
 
         # Create objects for play
         self.__attempts_remaining = 3
-        self.__ATTEMPTS_REMAINING = text.Text('ATTEMPTS REMAINING: 3', 'assets/font.ttf', 30, True, rgb.WHITE, self.__WIDTH // 2 + 300, self.__HEIGHT // 2 - 100, self.__WIN)
+        self.__ATTEMPTS_REMAINING = text.Text('ATTEMPTS REMAINING: 3', 'assets/font.ttf', 15, self.__WIDTH // 2 + 117, self.__HEIGHT // 2 - 277, self.__WIN)
 
     # Checks for events in menu screen
     def __check_events_menu(self):
@@ -86,7 +86,7 @@ class Game:
 
         # Puzzle Boarder
         puzzle_boarder = pygame.Rect(0, 0, self.__PUZZLE_WIDTH, self.__PUZZLE_HEIGHT)
-        puzzle_boarder.center = (self.__WIDTH // 2, self.__WIDTH // 2)
+        puzzle_boarder.center = (self.__WIDTH // 2, self.__HEIGHT // 2 - 30)
         pygame.draw.rect(self.__WIN, rgb.BLACK, puzzle_boarder)
         pygame.display.update()  # Update window
 
