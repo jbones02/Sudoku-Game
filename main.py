@@ -34,6 +34,6 @@ board3 = board.Board([[7, 8, None, 4, None, None, 1, 2, None],
                       [None, 4, 9, 2, None, 6, None, None, 7]])
 
 board1.print()
-board1.solve()
+board1.solve()        self.__empty_indices =  []
 board1.print()
 '''

@@ -1,7 +1,6 @@
 class Puzzle:
     def __init__ (self, board):
-        self.__board = board
-        self.__empty_indices =  []
+        self.board = board
 
     def print(self):
         for i in range(9):
@@ -11,15 +10,15 @@ class Puzzle:
                 if j == 0 or j == 3 or j == 6:
                     print ('| ', end='')
                 if j == 8:  # If last num in row, do not print space after
-                    if self.__board[i][j] == None:  # If val is empty
+                    if self.board[i][j] == None:  # If val is empty
                         print('*', end=' |')
                     else:  # If val is num
-                        print(self.__board[i][j], end=' |')
+                        print(self.board[i][j], end=' |')
                 else:
-                    if self.__board[i][j] == None:  # If val is empty
+                    if self.board[i][j] == None:  # If val is empty
                         print('*', end=' ')
                     else:  # If val is num
-                        print(self.__board[i][j], end=' ')
+                        print(self.board[i][j], end=' ')
             print()  # Print new line if end of row
         print('-------------------------')  # Print bottom boarder
     
@@ -116,13 +115,13 @@ class Puzzle:
 
     # Calls recursive function to solve board
     def solve(self):
-        self.__solve_recurse(self.__board)
+        self.__solve_recurse(self.board)
 
     # Recursively solves board
     def __solve_recurse(self, board):
         # Base case for recursion
         if self.__is_solved(board):
-            self.__board = board
+            self.board = board
             return True
         
         # Get indices of next empty space
@@ -141,3 +140,10 @@ class Puzzle:
 
         # If no solution is found
         return False
+
+    # API has empty tiles set to zero, so converts zeros to None
+    def zeros_to_none(self):
+        for i in range(9):
+            for j in range (9):
+                if self.board[i][j] == 0:
+                    self.board[i][j] = None

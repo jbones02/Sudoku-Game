@@ -1,30 +1,38 @@
 import pygame
-import boardered_text
-import rgb
+import util
 
-class Button(boardered_text.Boarded_text):
-    def __init__(self, text_input, font_file, size, color, x, y, WIN):
-        self.__font = pygame.font.Font(font_file, size)
-        self.__text_input = text_input
-        self.__text = self.__font.render(self.__text_input, True, rgb.BLACK, color)
-        self.__x = x
-        self.__y = y
+class Button():
+    def __init__(self, TEXT_INPUT, FONT_FILE, TEXT_SIZE, COLOR, BOARDER_COLOR, X, Y, WIN, WIDTH, HEIGHT):
+        self.__font = pygame.font.Font(FONT_FILE, TEXT_SIZE)
+        self.__TEXT_INPUT = TEXT_INPUT
+        self.__COLOR = COLOR
+        self.BOARDER_COLOR = BOARDER_COLOR
+        self.__text = self.__font.render(self.__TEXT_INPUT, True, util.BLACK)
+        self.__X = X
+        self.__Y = Y
         self.__WIN = WIN
         self.__text_rect = self.__text.get_rect()
-        self.__text_rect.center = (self.__x, self.__y)
+        self.__text_rect.center = (self.__X, self.__Y)
 
         # Button dimensions
-        self.__width = len(range(self.__text_rect.left, self.__text_rect.right)) + 20
-        self.__height = len(range(self.__text_rect.top, self.__text_rect.bottom)) + 20
-        self.__inner_rect = pygame.Rect(0, 0, self.__width - 10, self.__height - 10)
-        self.__inner_rect.center = (self.__x, self.__y)
-        self.__boarder_rect = pygame.Rect(0, 0, self.__width, self.__height)
-        self.__boarder_rect.center = (self.__x, self.__y)
+        if WIDTH == None:
+            self.__WIDTH = len(range(self.__text_rect.left, self.__text_rect.right)) + 20
+        else:
+            self.__WIDTH = WIDTH
+        if HEIGHT == None: 
+            self.__HEIGHT = len(range(self.__text_rect.top, self.__text_rect.bottom)) + 20
+        else:
+            self.__HEIGHT = HEIGHT
+        self.__inner_rect = pygame.Rect(0, 0, self.__WIDTH - 10, self.__HEIGHT - 10)
+        self.__inner_rect.center = (self.__X, self.__Y)
+        self.__boarder_rect = pygame.Rect(0, 0, self.__WIDTH, self.__HEIGHT)
+        self.__boarder_rect.center = (self.__X, self.__Y)
 
+    # Draws button
     def draw(self):
-        pygame.draw.rect(self.__WIN, rgb.BLACK, self.__boarder_rect)
-        pygame.draw.rect(self.__WIN, rgb.WHITE, self.__inner_rect)
-        self.__WIN.blit(self.__text, self.__text_rect)
+        pygame.draw.rect(self.__WIN, self.BOARDER_COLOR, self.__boarder_rect)  # Button boarder
+        pygame.draw.rect(self.__WIN, self.__COLOR, self.__inner_rect)  # Button color
+        self.__WIN.blit(self.__text, self.__text_rect)  # Button text
 
     # Checks if button was clicked
     def clicked(self, click_pos):
@@ -32,23 +40,3 @@ class Button(boardered_text.Boarded_text):
             return True
         else:
             return False
-        
-    # Changes color if button is being hovered over
-    def hovered(self, hover_pos):
-        if (hover_pos[0] in range(self.__text_rect.left, self.__text_rect.right)) and (hover_pos[1] in range(self.__text_rect.top, self.__text_rect.bottom)):
-            self.__text = self.__font.render(self.text_input, True, rgb.GREY)
-
-
-    '''
-    def __init__(self, text, font_file, x, y, WIN):
-        self.__font = pygame.font.Font(font_file, 30)
-        self.__text = self.__font.render(text, True, rgb.BLACK)
-        self.__x = x
-        self.__y = y
-        self.__WIN = WIN
-        self.__text_rect = self.__text.get_rect()
-        self.__text_rect.center = (self.__x, self.__y)
-
-    def draw(self):
-        self.__WIN.blit(self.__text, self.__text_rect)
-    '''
