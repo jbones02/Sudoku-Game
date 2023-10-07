@@ -32,6 +32,7 @@ class Game:
         self.__attempts_remaining = 3
         self.__attempts_remaining_txt = text.Text('ATTEMPTS REMAINING: 3', 'assets/font.ttf', 15, self.__WIDTH // 2 + 117, self.__HEIGHT // 2 - 277, self.__WIN)
         self.__unsolved_puzzle = []
+        self.__notes_puzzle = []
         self.__solved_puzzle = []
         self.__puzzle_tiles = []
         self.__menu_btn = button.Button('Menu', 'assets/font.ttf', 30, util.WHITE, util.BLACK, self.__WIDTH // 2 + 180, self.__HEIGHT // 2 + 245, self.__WIN, None, None)
@@ -74,7 +75,7 @@ class Game:
             self.__MOUSE_POS = pygame.mouse.get_pos()  # Get mouse position
             self.__check_events_menu()  # Check for events
             self.__draw_menu()  # Update display
-        self.__play()
+        self.__play() # Move to next screen
 
     # Creates buttons for each tile
     def __create_tile_bts(self):
@@ -101,8 +102,10 @@ class Game:
                 else:
                     num = str(self.__unsolved_puzzle.board[i][j])
                     cur_btn = button.Button(num, 'assets/font.ttf', 27, util.WHITE, util.WHITE, x, y, self.__WIN, 40, 40)
+                print((cur_btn.X, cur_btn.Y), end = ' ')
                 cur_row.append(cur_btn)
                 self.__puzzle_tiles.append(cur_row)
+            print()
 
             x = 60  # Reset x for next row
 
@@ -110,9 +113,11 @@ class Game:
         # Use Dosuku API to get puzzle
         response = requests.get('https://sudoku-api.vercel.app/api/dosuku?query={newboard(limit:1){grids{value}}}')
         response_puzzle_unsolved = (response.json().get('newboard').get('grids'))[0].get('value')  # Extract puzzle from response
-        response_puzzle_solved = (response.json().get('newboard').get('grids'))[0].get('value')  # Extract puzzle from response
+        response_puzzle_notes = (response.json().get('newboard').get('grids'))[0].get('value')
+        response_puzzle_solved = (response.json().get('newboard').get('grids'))[0].get('value')
 
         self.__unsolved_puzzle = puzzle.Puzzle(response_puzzle_unsolved)  # Initialize unsolved puzzle
+        self.__notes_puzzle = puzzle.Puzzle(response_puzzle_notes)  # Create copy of unsolved puzzle for notes
 
         # Generate solution with backtracking method
         self.__solved_puzzle = puzzle.Puzzle(response_puzzle_solved)
@@ -126,6 +131,40 @@ class Game:
         # Print puzzles to terminal
         self.__unsolved_puzzle.print()
         self.__solved_puzzle.print()
+
+    def __handle_tile_click(self):
+        row = None
+        col = None
+        tile_clicked = False
+        for i in range(9):
+            print("Entering loop")
+            for j in range(9):
+                if (self.__puzzle_tiles[i][j]).clicked(self.__MOUSE_POS):
+                    print("Mouse POS:", self.__MOUSE_POS)
+                    tile_clicked = True
+                    row = i
+                    col = j
+                    print('clicked: (', i, ', ', j, ')')
+                    break
+                    #print((i,j))
+        # If tile was clicked draw a green box around it
+        if tile_clicked == True:
+            cur_btn = []
+            cur_btn_X = self.__puzzle_tiles[row][col].X
+            cur_btn_Y = self.__puzzle_tiles[row][col].Y
+            print("board: ", self.__unsolved_puzzle.board[i][j])
+            print(self.__unsolved_puzzle.board)
+            if self.__unsolved_puzzle.board[row][col] == None:
+                cur_btn = button.Button('', 'assets/font.ttf', 27, util.WHITE, util.BLUE, cur_btn_X, cur_btn_Y, self.__WIN, 40, 40)
+            else:
+                num = self.__unsolved_puzzle.board[row][col]
+                print("num: ", num)
+                cur_btn = button.Button(str(num), 'assets/font.ttf', 27, util.WHITE, util.BLUE, cur_btn_X, cur_btn_Y, self.__WIN, 40, 40)
+            self.__puzzle_tiles[row][col] = cur_btn
+            # TODO CHANGE NOTES PUZZLE
+            #self.__puzzle_tiles[row][col].draw()  # Draw selected button
+            #pygame.display.update()  # Update window
+
 
     # Checks for events in play screen
     def __check_events_play(self):
@@ -141,6 +180,7 @@ class Game:
                     pass
                 elif self.__auto_btn.clicked(self.__MOUSE_POS):  # If player clicks auto button
                     pass
+                self.__handle_tile_click()
 
     # Draws play screen
     def __draw_play(self):
@@ -180,9 +220,18 @@ class Game:
         while self.__playing:
             self.__clock.tick(self.__FRAME_RATE)
             self.__draw_play()  # Update display
+            self.__MOUSE_POS = pygame.mouse.get_pos()  # Get mouse position
             self.__check_events_play()  # Check for events
             self.__draw_play()  # Update display
-        self.__menu()
+        
+        # Reset puzzle
+        self.__attempts_remaining = 3
+        self.__attempts_remaining_txt = text.Text('ATTEMPTS REMAINING: 3', 'assets/font.ttf', 15, self.__WIDTH // 2 + 117, self.__HEIGHT // 2 - 277, self.__WIN)
+        self.__unsolved_puzzle = []
+        self.__notes_puzzle = []
+        self.__solved_puzzle = []
+        self.__puzzle_tiles = []
+        self.__menu()  # Move to next screen
         
 
     # Starts game

@@ -8,11 +8,11 @@ class Button():
         self.__COLOR = COLOR
         self.BOARDER_COLOR = BOARDER_COLOR
         self.__text = self.__font.render(self.__TEXT_INPUT, True, util.BLACK)
-        self.__X = X
-        self.__Y = Y
+        self.X = X
+        self.Y = Y
         self.__WIN = WIN
         self.__text_rect = self.__text.get_rect()
-        self.__text_rect.center = (self.__X, self.__Y)
+        self.__text_rect.center = (self.X, self.Y)
 
         # Button dimensions
         if WIDTH == None:
@@ -24,9 +24,9 @@ class Button():
         else:
             self.__HEIGHT = HEIGHT
         self.__inner_rect = pygame.Rect(0, 0, self.__WIDTH - 10, self.__HEIGHT - 10)
-        self.__inner_rect.center = (self.__X, self.__Y)
+        self.__inner_rect.center = (self.X, self.Y)
         self.__boarder_rect = pygame.Rect(0, 0, self.__WIDTH, self.__HEIGHT)
-        self.__boarder_rect.center = (self.__X, self.__Y)
+        self.__boarder_rect.center = (self.X, self.Y)
 
     # Draws button
     def draw(self):
@@ -37,6 +37,9 @@ class Button():
     # Checks if button was clicked
     def clicked(self, click_pos):
         if (click_pos[0] in range(self.__boarder_rect.left, self.__boarder_rect.right)) and (click_pos[1] in range(self.__boarder_rect.top, self.__boarder_rect.bottom)):
+            print("LR:", self.__boarder_rect.left, self.__boarder_rect.right)
+            print('TB:', self.__boarder_rect.top, self.__boarder_rect.bottom)
+            print('pos:', click_pos)
             return True
         else:
             return False
