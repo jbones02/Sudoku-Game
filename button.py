@@ -4,10 +4,10 @@ import util
 class Button():
     def __init__(self, TEXT_INPUT, FONT_FILE, TEXT_SIZE, COLOR, BOARDER_COLOR, X, Y, WIN, WIDTH, HEIGHT):
         self.__font = pygame.font.Font(FONT_FILE, TEXT_SIZE)
-        self.__TEXT_INPUT = TEXT_INPUT
+        self.text = TEXT_INPUT
         self.__COLOR = COLOR
         self.BOARDER_COLOR = BOARDER_COLOR
-        self.__text = self.__font.render(self.__TEXT_INPUT, True, util.BLACK)
+        self.__text = self.__font.render(self.text, True, util.BLACK)
         self.X = X
         self.Y = Y
         self.__WIN = WIN
@@ -37,9 +37,6 @@ class Button():
     # Checks if button was clicked
     def clicked(self, click_pos):
         if (click_pos[0] in range(self.__boarder_rect.left, self.__boarder_rect.right)) and (click_pos[1] in range(self.__boarder_rect.top, self.__boarder_rect.bottom)):
-            print("LR:", self.__boarder_rect.left, self.__boarder_rect.right)
-            print('TB:', self.__boarder_rect.top, self.__boarder_rect.bottom)
-            print('pos:', click_pos)
             return True
         else:
             return False

@@ -102,11 +102,8 @@ class Game:
                 else:
                     num = str(self.__unsolved_puzzle.board[i][j])
                     cur_btn = button.Button(num, 'assets/font.ttf', 27, util.WHITE, util.WHITE, x, y, self.__WIN, 40, 40)
-                print((cur_btn.X, cur_btn.Y), end = ' ')
                 cur_row.append(cur_btn)
-                self.__puzzle_tiles.append(cur_row)
-            print()
-
+            self.__puzzle_tiles.append(cur_row)  # Save cur row
             x = 60  # Reset x for next row
 
     def __setup_puzzles(self):
@@ -130,35 +127,32 @@ class Game:
 
         # Print puzzles to terminal
         self.__unsolved_puzzle.print()
-        self.__solved_puzzle.print()
+        self.__solved_puzzle.print()        
 
     def __handle_tile_click(self):
         row = None
         col = None
         tile_clicked = False
+
         for i in range(9):
-            print("Entering loop")
             for j in range(9):
-                if (self.__puzzle_tiles[i][j]).clicked(self.__MOUSE_POS):
-                    print("Mouse POS:", self.__MOUSE_POS)
+                if (self.__puzzle_tiles[i][j].clicked(self.__MOUSE_POS)):
                     tile_clicked = True
                     row = i
                     col = j
-                    print('clicked: (', i, ', ', j, ')')
                     break
-                    #print((i,j))
-        # If tile was clicked draw a green box around it
+            if tile_clicked == True:
+                break
+
+        # If tile was clicked draw a box around it to show that it was selected
         if tile_clicked == True:
             cur_btn = []
             cur_btn_X = self.__puzzle_tiles[row][col].X
             cur_btn_Y = self.__puzzle_tiles[row][col].Y
-            print("board: ", self.__unsolved_puzzle.board[i][j])
-            print(self.__unsolved_puzzle.board)
             if self.__unsolved_puzzle.board[row][col] == None:
                 cur_btn = button.Button('', 'assets/font.ttf', 27, util.WHITE, util.BLUE, cur_btn_X, cur_btn_Y, self.__WIN, 40, 40)
             else:
                 num = self.__unsolved_puzzle.board[row][col]
-                print("num: ", num)
                 cur_btn = button.Button(str(num), 'assets/font.ttf', 27, util.WHITE, util.BLUE, cur_btn_X, cur_btn_Y, self.__WIN, 40, 40)
             self.__puzzle_tiles[row][col] = cur_btn
             # TODO CHANGE NOTES PUZZLE
